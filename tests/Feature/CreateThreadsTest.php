@@ -10,16 +10,24 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class CreateThreadsTest extends TestCase
 {
     use DatabaseMigrations;
-     
-     /** @test */
-     public function guests_can_not_create_new_threads()
-     {
+    
+
+    /** @test */
+    public function guests_cannot_see_the_create_thread_page()
+    {
+        $this->withExceptionHandling()
+            ->get('/threads/create')
+            ->assertRedirect('/login');
+        
+    }
+
+    /** @test */
+    public function guests_can_not_create_new_threads()
+    {
         $this->expectException('Illuminate\Auth\AuthenticationException');
-
         $thread = make('App\Thread');
-
         $this->post('/threads', $thread->toArray());
-     }
+    }
 
 
      /** @test */
