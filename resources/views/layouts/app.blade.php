@@ -55,6 +55,10 @@
                             @endforeach
                             </ul>
                         </li>
+
+                        <li>
+                            <a href="/threads/create">Create thread</a>
+                        </li>
                         
                         
                     </ul>
