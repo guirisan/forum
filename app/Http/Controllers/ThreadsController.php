@@ -26,6 +26,7 @@ class ThreadsController extends Controller
             $threads = Thread::latest();        
         }
 
+            dd($threads);
         if ($username = request('by'))
         {
             $user = \App\User::where('name', $username)->firstOrFail();

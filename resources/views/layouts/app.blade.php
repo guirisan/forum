@@ -36,23 +36,22 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li>
-                            <a href="/threads">
-                                All threads
-                            </a>
-                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Browse <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                            @foreach ($channels as $channel)
                                 <li>
-                                    <a href="/threads/{{ $channel->slug }}">
-                                        {{ $channel->name}}
+                                    <a href="/threads">
+                                        All threads
                                     </a>
                                 </li>
-                            @endforeach
+                                <li>
+                                    <a href="/threads/by?{{  auth()->user()->name }}">
+                                        My threads
+                                    </a>
+                                </li>
+
                             </ul>
                         </li><li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
