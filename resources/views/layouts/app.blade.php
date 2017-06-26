@@ -46,11 +46,14 @@
                                         All threads
                                     </a>
                                 </li>
+
+                                @if (auth()->check())
                                 <li>
                                     <a href="/threads/by?{{  auth()->user()->name }}">
                                         My threads
                                     </a>
                                 </li>
+                                @endif
 
                             </ul>
                         </li><li class="dropdown">
