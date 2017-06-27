@@ -8,6 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <style>
+        body { padding-bottom: 100px; }
+        .level { display: flex; align-items: center; }
+        .flex {flex: 1;}
+
+    </style>
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
@@ -49,12 +55,17 @@
 
                                 @if (auth()->check())
                                 <li>
-                                    <a href="/threads/by?{{  auth()->user()->name }}">
+                                    <a href="/threads?by={{  auth()->user()->name }}">
                                         My threads
                                     </a>
                                 </li>
                                 @endif
 
+                                <li>
+                                    <a href="/threads?popular=1">
+                                        Popular threads
+                                    </a>
+                                </li>
                             </ul>
                         </li><li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
