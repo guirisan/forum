@@ -17,12 +17,9 @@
                         <div class="panel-heading">
                             <div class="level">
                                 <span class="flex">
-                                    {{-- <a href="{{ $thread->path }}"> --}}
-                                    {{-- {{ dd($thread)}} --}}
-                                    <a href="#">
+                                    <a href="{{ $thread->path() }}">
                                         {{ $thread->title }}    
                                     </a>
-                                    {{-- </a>  --}}
                                 </span>
                                 <span>
                                     posted 

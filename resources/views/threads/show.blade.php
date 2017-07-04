@@ -12,6 +12,7 @@
                             <a href="{{ route('profile', $thread->owner) }}"> {{ $thread->owner->name}} </a>
                             posted: <strong>{{ $thread->title }}</strong>
                         </span>
+                        @can ('update', $thread)
                         <span>
                             <form method="POST" action="{{ $thread->path() }}">
                                 {{ csrf_field() }}
@@ -20,6 +21,8 @@
                                 <button type="submit" class="btn btn-link">Delete</button>
                             </form>
                         </span>
+                        @endcan
+                        
                     </div>
                 </div>
 
