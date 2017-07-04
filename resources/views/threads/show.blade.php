@@ -6,14 +6,21 @@
         <div class="col-md-8 ">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{-- <a href="/profiles/{{ $thread->owner->name }}"> --}}
-                    <a href="{{ route('profile', $thread->owner) }}">
-                        {{ $thread->owner->name}} 
-                    </a>
-                    posted:
-                    <strong>
-                        {{ $thread->title }}    
-                    </strong>
+                    <div class="level">
+                        <span class="flex">
+                            {{-- <a href="/profiles/{{ $thread->owner->name }}"> --}}
+                            <a href="{{ route('profile', $thread->owner) }}"> {{ $thread->owner->name}} </a>
+                            posted: <strong>{{ $thread->title }}</strong>
+                        </span>
+                        <span>
+                            <form method="POST" action="{{ $thread->path() }}">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            </form>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="panel-body">

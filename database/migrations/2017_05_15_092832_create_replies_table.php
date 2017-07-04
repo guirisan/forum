@@ -20,6 +20,9 @@ class CreateRepliesTable extends Migration
             $table->integer('user_id');
             $table->integer('thread_id');
             $table->text('body');
+
+            // lesson 23 cascade
+            // $table->foreign('thread_id')->onDelete('cas');
         }); 
     }
 
