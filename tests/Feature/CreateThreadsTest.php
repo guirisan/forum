@@ -2,10 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+use App\Activity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Tests\TestCase;
 
 class CreateThreadsTest extends TestCase
 {
@@ -95,6 +96,20 @@ class CreateThreadsTest extends TestCase
 
         $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+        
+        //lesson 28: when thread is deleted, activities associated must be removed too
+        // $this->assertDatabaseMissing('activities', [
+        //     'subject_id' => $thread->id,
+        //     'subject_type' => get_class($thread)
+        // ]);
+        // $this->assertDatabaseMissing('activities', [
+        //     'subject_id' => $reply->id,
+        //     'subject_type' => get_class($reply)
+        // ]);
+
+        // En compte de comprovar que no existixen eixos registre a la BD
+        // comprovem que la taula d'activitats està buida, que en este cas és equivalent
+        $this->assertEquals(0,Activity::count());
     }
 
     /** @test */

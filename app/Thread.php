@@ -23,7 +23,8 @@ class Thread extends Model
 
         // lesson 23 cascade delete 
         static::deleting(function ($thread){
-            $thread->replies()->delete();
+            $thread->replies->each->delete();
+
         });
         
     }
