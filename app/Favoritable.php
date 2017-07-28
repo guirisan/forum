@@ -4,7 +4,6 @@ namespace App;
 
 trait Favoritable
 {
-    
     public function favorites()
     {
         return $this->morphMany(Favorite::class, 'favorited');
@@ -12,11 +11,18 @@ trait Favoritable
 
     public function favorite()
     {
-        $user_id = ['user_id' => auth()->id()];
+        $attributes = ['user_id' => auth()->id()];
 
-        if (! $this->favorites()->where($user_id)->exists()){
-            return $this ->favorites()->create($user_id);
+        if (! $this->favorites()->where($attributes)->exists()) {
+            return $this->favorites()->create($attributes);
         }
+    }
+
+    public function unfavorite()
+    {
+        $attributes = ['user_id' => auth()->id()];
+
+        $this->favorites()->where($attributes)->delete();
     }
 
     public function isFavorited()
@@ -25,6 +31,10 @@ trait Favoritable
         return !! $this->favorites->where('user_id', auth()->id())->count();
     }
 
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
+    }
     /**
      * Allows to use $reply->favorites_count from view (reply.blade.php l.17)
      * @return int Favorites count for reply
@@ -33,5 +43,4 @@ trait Favoritable
     {
         return $this->favorites->count();
     }
-
 }

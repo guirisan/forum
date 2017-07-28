@@ -13,7 +13,7 @@ window.Vue = require('vue');
 ////////////////////////
 // guirisan lesson 29 //
 ////////////////////////
-window.events = new Vue();
+window.events = new Vue(); 
 
 window.flash = function (message){
     window.events.$emit('flash', message);
@@ -33,6 +33,7 @@ window.flash = function (message){
 
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('reply', require('./components/Reply.vue'));
+Vue.component('favorite', require('./components/Favorite.vue'));
 
 const app = new Vue({
     el: '#app'

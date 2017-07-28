@@ -12,6 +12,9 @@ class Reply extends Model
 
     protected $with = ['owner', 'favorites'];
 
+    // when cast to JSON or an array, what propierties to append?
+    protected $appends = ['favoritesCount', 'isFavorited'];
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');

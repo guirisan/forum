@@ -1,12 +1,18 @@
 <script>
+    import Favorite from './Favorite.vue';
+
     export default{
         props: ['attributes'],
+        
         data() {
             return {
                 editing: false,
                 body: this.attributes.body,
             };
         },
+
+        components: { Favorite },
+
         methods: {
             update() {
                 axios.patch('/replies/' + this.attributes.id, {
