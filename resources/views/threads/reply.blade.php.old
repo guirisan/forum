@@ -16,7 +16,7 @@
                     <favorite :reply="{{ $reply }}"></favorite>
                 </div>
                 @endif
-                
+
             </div>
             
         </div>

@@ -8,6 +8,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <script>
+        window.App = {!! json_encode([
+            'signedIn' => Auth::check(),
+            'user' => Auth::user()
+        ])!!}
+    </script>
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         body { padding-bottom: 100px; }
         .level { display: flex; align-items: center; }
@@ -17,8 +25,6 @@
     </style>
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body style="padding-bottom: 200px">
     <div id="app">

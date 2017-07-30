@@ -9,6 +9,15 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+window.Vue.prototype.authorize = function(handler) {
+    //////////////////////////
+    // set admin privileges here//
+    //////////////////////////
+    
+    let user = window.App.user;
+
+    return user ? handler(user) : false;
+}
 
 ////////////////////////
 // guirisan lesson 29 //
@@ -32,8 +41,11 @@ window.flash = function (message){
  */
 
 Vue.component('flash', require('./components/Flash.vue'));
-Vue.component('reply', require('./components/Reply.vue'));
-Vue.component('favorite', require('./components/Favorite.vue'));
+// Vue.component('reply', require('./components/Reply.vue'));
+// Vue.component('favorite', require('./components/Favorite.vue'));
+
+// PAGES
+Vue.component('thread-view', require('./pages/Thread.vue'));
 
 const app = new Vue({
     el: '#app'
