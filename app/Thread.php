@@ -16,17 +16,15 @@ class Thread extends Model
     {
         parent::boot();
 
-        static::addGlobalScope('replyCount', function ($builder){
+        static::addGlobalScope('replyCount', function ($builder) {
             $builder->withCount('replies');
         });
 
 
-        // lesson 23 cascade delete 
-        static::deleting(function ($thread){
+        // lesson 23 cascade delete
+        static::deleting(function ($thread) {
             $thread->replies->each->delete();
-
         });
-        
     }
     
     public function path()
@@ -51,13 +49,11 @@ class Thread extends Model
 
     public function addReply($reply)
     {
-        $this->replies()->create($reply); 
+        return $this->replies()->create($reply);
     }
 
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
     }
-
 }
-
