@@ -34,14 +34,14 @@ class ReadThreadsTest extends TestCase
             ->assertSee($this->thread->body);
     }
 
-    /** @test */
-    public function a_user_can_read_replies_associated_to_single_thread()
-    {
-        $reply = create('App\Reply', ['thread_id' => $this->thread->id]);
+    // /** @test */
+    // public function a_user_can_read_replies_associated_to_single_thread()
+    // {
+    //     $reply = create('App\Reply', ['thread_id' => $this->thread->id]);
 
-        $this->get($this->thread->path())
-            ->assertSee($reply->body);
-    }
+    //     $this->get($this->thread->path())
+    //         ->assertSee($reply->body);
+    // }
 
 
     /** @test */
@@ -90,6 +90,17 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_filter_threads_by_those_that_are_unanswered()
+    {
+        $thread = create('App\Thread');
+        create('App\Reply', ['thread_id' => $thread->id]);
+
+        $response = $this->getJson('threads?unanswered=1')->json();
+
+        $this->assertCount(1, $response);
+    }
+
+    /** @test */
     public function a_user_can_request_all_replies_for_a_given_thread()
     {
         $thread = create('App\Thread');
@@ -97,8 +108,7 @@ class ReadThreadsTest extends TestCase
         // dd($thread->replies);
         $response = $this->getJson($thread->path() . '/replies')->json();
 
-        $this->assertCount(1,$response['data']);
-        $this->assertEquals(2,$response['total']);
-
+        $this->assertCount(2, $response['data']);
+        $this->assertEquals(2, $response['total']);
     }
 }

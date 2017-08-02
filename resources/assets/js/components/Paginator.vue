@@ -1,12 +1,12 @@
 <template>
     <ul class="pagination" v-if="shouldPaginate">
         <li v-show="prevUrl">
-          <a href="#" aria-label="Previous" rel="previous" @click.prevent="page--">
+          <a aria-label="Previous" rel="previous" @click.prevent="page--">
             <span aria-hidden="true">&laquo; Previous</span>
           </a>
         </li>
         <li v-show="nextUrl">
-          <a href="#" aria-label="Next" rel="next" @click.prevent="page++">
+          <a aria-label="Next" rel="next" @click.prevent="page++">
             <span aria-hidden="true">Next &raquo; </span>
           </a>
         </li>
@@ -44,7 +44,7 @@
 
         methods: {
             broadcast() {
-                return this.$emit('changed', this.page);
+                return this.$emit('change', this.page);
             },
 
             updateUrl(){

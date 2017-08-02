@@ -1951,6 +1951,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.dataSet = data;
             this.items = data.data;
+
+            window.scrollTo(0, 0);
         },
         url: function url(page) {
             if (!page) {
@@ -58522,7 +58524,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         broadcast: function broadcast() {
-            return this.$emit('changed', this.page);
+            return this.$emit('change', this.page);
         },
         updateUrl: function updateUrl() {
             history.pushState(null, null, '?page=' + this.page);
@@ -58546,7 +58548,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }]
   }, [_c('a', {
     attrs: {
-      "href": "#",
       "aria-label": "Previous",
       "rel": "previous"
     },
@@ -58569,7 +58570,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }]
   }, [_c('a', {
     attrs: {
-      "href": "#",
       "aria-label": "Next",
       "rel": "next"
     },
