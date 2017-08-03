@@ -112,43 +112,5 @@ class ReadThreadsTest extends TestCase
         $this->assertEquals(2, $response['total']);
     }
 
-    /** @test */
-    public function a_user_can_subscribe_to_thread()
-    {
-        // given a thread
-        $thread = create('App\Thread');
-
-        // when the user subscribes
-        $thread->subscribe($userId = 1);
-
-        // we should be able to filter threads that user has subscribed
-        $this->assertEquals(
-            1,
-            $thread->subscriptions()->where('user_id', $userId)->count()
-        );
-    }
-
-    /** @test */
-    public function a_user_can_unsubscribe_from_thread()
-    {
-        // given a thread
-        $thread = create('App\Thread');
-
-        // when the user subscribes
-        $thread->subscribe($userId = 1);
-        $thread->subscribe($otherUserId = 2);
-
-        // we should be able to filter threads that user has subscribed
-        $this->assertEquals(
-            1,
-            $thread->subscriptions()->where('user_id', $userId)->count()
-        );
-
-        $thread->unsubscribe($userId);
-
-        $this->assertCount(
-            1,
-            $thread->subscriptions
-        );
-    }
+    
 }
