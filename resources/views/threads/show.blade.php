@@ -41,12 +41,19 @@
 
             </div>
             <div class="col-md-4">
+
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        Thread published {{ $thread->created_at->diffForHumans() }} by 
-                        <a href="#">{{ $thread->owner->name}}</a>, and has 
-                        <span v-text="repliesCount"></span> 
-                        {{ str_plural('comment', $thread->replies_count) }}
+                        <p>
+                            Thread published {{ $thread->created_at->diffForHumans() }} by 
+                            <a href="#">{{ $thread->owner->name}}</a>, and has 
+                            <span v-text="repliesCount"></span> 
+                            {{ str_plural('comment', $thread->replies_count) }}
+                        </p>
+
+                        <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
+                         
+
                     </div>
                 </div>
 
