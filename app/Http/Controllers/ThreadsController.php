@@ -5,29 +5,29 @@ namespace App\Http\Controllers;
 use App\Channel;
 use App\Filters\ThreadFilters;
 use App\Thread;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ThreadsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Responsef
      */
     public function index(Channel $channel, ThreadFilters $filters)
-    {   
-
+    {
         $threads = $this->getThreads($channel, $filters);
     
-        if (request()->wantsJson()){
+        if (request()->wantsJson()) {
             return $threads;
-        }        
-        return view('threads.index',compact('threads'));
+        }
+        return view('threads.index', compact('threads'));
     }
 
     /**
@@ -73,6 +73,10 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
+        if (auth()->check()){
+            auth()->user()->read($thread);
+        }
+
         return view('threads.show', compact('thread'));
     }
 
@@ -100,7 +104,7 @@ class ThreadsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.  
+     * Remove the specified resource from storage.
      *
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
@@ -109,16 +113,16 @@ class ThreadsController extends Controller
     {
         $this->authorize('update', $thread);
 
-        if ($thread->user_id != auth()->id()){
+        if ($thread->user_id != auth()->id()) {
             abort(403, 'You do not have permission to do this');
         }
 
 
-        // lesson 23 cascade delete 
+        // lesson 23 cascade delete
         // $thread->replies()->delete();
         $thread->delete();
 
-        if (request()->wantsJson()){
+        if (request()->wantsJson()) {
             return response([], 204);
         }
 
@@ -129,7 +133,7 @@ class ThreadsController extends Controller
     {
         $threads = Thread::latest()->filter($filters);
 
-        if($channel->exists){
+        if ($channel->exists) {
             $threads->where('channel_id', $channel->id);
         }
 
