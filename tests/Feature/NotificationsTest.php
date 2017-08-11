@@ -43,7 +43,7 @@ class NotificationsTest extends TestCase
     {
         create(DatabaseNotification::class);
 
-        $this->assertCount(1,$this->getJson("/profiles/" . auth()->user()->name . "/notifications/")->json());
+        $this->assertCount(1,$this->getJson("/profiles/" . auth()->user()->name . "/notifications")->json());
     }
 
     /** @test */
