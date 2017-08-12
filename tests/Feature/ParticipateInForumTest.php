@@ -33,7 +33,6 @@ class ParticipateInForumTest extends TestCase
         // $this->get($thread->path())->assertSee($reply->body);
         $this->assertDatabaseHas('replies', ['body' => $reply->body]);
         $this->assertEquals(1, $thread->fresh()->replies_count);
-
     }
 
     /** @test */
@@ -45,7 +44,7 @@ class ParticipateInForumTest extends TestCase
 
         $reply = make('App\Reply', [ 'body' => null ]);
         
-        $this->post($thread->path() . '/replies' , $reply->toArray())
+        $this->post($thread->path() . '/replies', $reply->toArray())
             ->assertSessionHasErrors('body');
     }
 
@@ -62,7 +61,6 @@ class ParticipateInForumTest extends TestCase
         $this->signIn()
             ->delete("/replies/{$reply->id}")
             ->assertStatus(403);
-
     }
 
     /** @test */
@@ -75,8 +73,8 @@ class ParticipateInForumTest extends TestCase
         $this->delete("/replies/{$reply->id}")
             ->assertStatus(302);
 
-        $this->assertDatabaseMissing('replies',['id' => $reply->id]);
-        $this->assertEquals(0,$reply->thread->fresh()->replies_count);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+        $this->assertEquals(0, $reply->thread->fresh()->replies_count);
     }
 
     /** @test */
@@ -90,7 +88,7 @@ class ParticipateInForumTest extends TestCase
         
         $this->patch("/replies/{$reply->id}", ['body' => $updatedBody]);
 
-        $this->assertDatabaseHas('replies',['id' => $reply->id, 'body' => $updatedBody]);
+        $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedBody]);
     }
 
 
@@ -108,8 +106,21 @@ class ParticipateInForumTest extends TestCase
         $this->signIn()
             ->patch("/replies/{$reply->id}")
             ->assertStatus(403);
+    }
 
+    /** @test */
+    public function replies_that_contain_spam_may_not_be_created()
+    {
+        $this->be($user = factory('App\User')->create());
 
+        $thread = create('App\Thread');
+        $reply = make('App\Reply', [
+            'body' => 'Yahoo customer support'
+        ]);
+
+        $this->expectException(\Exception::class);
+
+        $this->post($thread->path() . '/replies', $reply->toArray());        
+        
     }
 }
-

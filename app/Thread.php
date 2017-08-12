@@ -49,6 +49,9 @@ class Thread extends Model
 
     public function addReply($reply)
     {
+        //lesson 49
+        // (new \App\Spam)->detect($reply->body);
+        
         $reply = $this->replies()->create($reply);
 
         $this->notifySubscribers($reply);
