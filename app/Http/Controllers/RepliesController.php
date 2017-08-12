@@ -19,34 +19,36 @@ class RepliesController extends Controller
         return $thread->replies()->paginate(20);
     }
     
-    public function store($channelId, Thread $thread, Spam $spam)
+    public function store($channelId, Thread $thread)
     {
-        $this->validateReply();
+        try {
+            $this->validateReply();
 
-        $spam->detect(request('body'));
-
-
-        $reply = $thread->addReply([
-            'body' => request('body'),
-            'user_id' => auth()->id()
-        ]);
-
-        if (request()->expectsJson()) {
-            return $reply->load('owner');
+            $reply = $thread->addReply([
+                'body' => request('body'),
+                'user_id' => auth()->id()
+            ]);
+        } catch (\Exception $e) {
+            return response('Sorry, your reply could not be saved at this time', 422);
+            // 422: La petició ha arribat pero el sistema no ha pogut processar-la            
         }
 
-        return back()
-            ->with('flash', 'Your reply has been received.');
+        return $reply->load('owner');
     }
 
     public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
 
-        $this->validateReply();
-        
-        // $reply->update(['body' => request('body')]);
-        $reply->update(request(['body']));
+        try {
+            $this->validateReply();
+            
+            // $reply->update(['body' => request('body')]);
+            $reply->update(request(['body']));
+            
+        } catch (\Exception $e) {
+            return response('Sorry, your reply could not be saved', 422);            
+        }
     }
 
     public function destroy(Reply $reply)
@@ -64,6 +66,8 @@ class RepliesController extends Controller
     public function validateReply()
     {
         $this->validate(request(), ['body' => 'required']);
+        // dd("shit");
+        
         resolve(Spam::class)->detect(request('body'));
     }
 }
