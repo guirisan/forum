@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
             });
             $view->with('channels', $channels);
         });
+
+        \Validator::extend('spamfree', 'App\Rules\SpamFree@passes'); // laravel 5.4. en laravel 5.5 comando artisan disponible
     }
 
     /**
