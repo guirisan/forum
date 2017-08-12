@@ -21,8 +21,7 @@ class RepliesController extends Controller
     
     public function store($channelId, Thread $thread, Spam $spam)
     {
-        $this->validate(request(), ['body' => 'required']);
-
+        $this->validateReply();
 
         $spam->detect(request('body'));
 
@@ -43,6 +42,8 @@ class RepliesController extends Controller
     public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
+
+        $this->validateReply();
         
         // $reply->update(['body' => request('body')]);
         $reply->update(request(['body']));
@@ -58,5 +59,11 @@ class RepliesController extends Controller
         }
         return back()
             ->with('flash', 'Reply has been deleted');
+    }
+
+    public function validateReply()
+    {
+        $this->validate(request(), ['body' => 'required']);
+        resolve(Spam::class)->detect(request('body'));
     }
 }
