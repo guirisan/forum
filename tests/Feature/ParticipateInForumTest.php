@@ -118,9 +118,25 @@ class ParticipateInForumTest extends TestCase
             'body' => 'Yahoo customer support'
         ]);
 
-        $this->expectException(\Exception::class);
+        $this->post($thread->path() . '/replies', $reply->toArray())
+            ->assertStatus(422);
+    }
 
-        $this->post($thread->path() . '/replies', $reply->toArray());        
-        
+    /** @test */
+    public function users_may_only_reply_once_per_minute()
+    {
+        $this->be($user = factory('App\User')->create());
+
+        $thread = create('App\Thread');
+
+        $reply = make('App\Reply', [
+            'body' => 'Reply text'
+        ]);
+
+        $this->post($thread->path() . '/replies', $reply->toArray())
+            ->assertStatus(200);
+
+        $this->post($thread->path() . '/replies', $reply->toArray())
+            ->assertStatus(422);
     }
 }

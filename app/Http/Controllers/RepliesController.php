@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Reply;
 use App\Thread;
+use Illuminate\Support\Facades\Gate;
 
 class RepliesController extends Controller
 {
@@ -20,6 +21,12 @@ class RepliesController extends Controller
     public function store($channelId, Thread $thread)
     {
         try {
+            
+            // $this->authorize('create', new Reply);
+            if (Gate::denies('create', new Reply)) {
+                return response('Relax your horses', 422);
+            }
+
             $this->validate(request(), ['body' => 'required|spamfree']);
 
             $reply = $thread->addReply([
@@ -28,7 +35,7 @@ class RepliesController extends Controller
             ]);
         } catch (\Exception $e) {
             return response('Sorry, your reply could not be saved at this time', 422);
-            // 422: La petició ha arribat pero el sistema no ha pogut processar-la            
+            // 422: La petició ha arribat pero el sistema no ha pogut processar-la
         }
 
         return $reply->load('owner');
@@ -43,9 +50,8 @@ class RepliesController extends Controller
             
             // $reply->update(['body' => request('body')]);
             $reply->update(request(['body']));
-            
         } catch (\Exception $e) {
-            return response('Sorry, your reply could not be saved', 422);            
+            return response('Sorry, your reply could not be saved', 422);
         }
     }
 
@@ -60,5 +66,4 @@ class RepliesController extends Controller
         return back()
             ->with('flash', 'Reply has been deleted');
     }
-
 }
