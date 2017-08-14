@@ -19,7 +19,6 @@ class MentionUsersTest extends TestCase
 
         $jane = create('App\User', ['name' => 'JaneDoe']);
          
-
         $thread = create('App\Thread');
 
         $reply = make('App\Reply', [
