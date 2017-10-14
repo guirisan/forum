@@ -75,18 +75,18 @@ class ReadThreadsTest extends TestCase
         //With 2 replies, 3 replies and 0 replies
         $threadWithTwoReplies = create('App\Thread');
         create('App\Reply', ['thread_id' => $threadWithTwoReplies->id], 2);
-        
+
         $threadWithThreeReplies = create('App\Thread');
         create('App\Reply', ['thread_id' => $threadWithThreeReplies->id], 3);
 
         $threadWithZeroReplies = $this->thread;
-        
+
 
         //When the user filter all trheads by popularity
         $response = $this->getJson('threads?popular=1')->json();
 
         //Then they should be returned ordered from most replies to least
-        $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
+        $this->assertEquals([3, 2, 0], array_column($response['data'], 'replies_count'));
     }
 
     /** @test */
@@ -97,7 +97,7 @@ class ReadThreadsTest extends TestCase
 
         $response = $this->getJson('threads?unanswered=1')->json();
 
-        $this->assertCount(1, $response);
+        $this->assertCount(1, $response['data']);
     }
 
     /** @test */
@@ -112,5 +112,5 @@ class ReadThreadsTest extends TestCase
         $this->assertEquals(2, $response['total']);
     }
 
-    
+
 }
