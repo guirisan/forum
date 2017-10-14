@@ -2,19 +2,19 @@
     <div>
         <div v-if="signedIn">
             <div class="form-group">
-                <textarea 
+                <textarea
                     v-model="body"
-                    name="body" 
+                    name="body"
                     id="body"
-                    class="form-control" 
-                    rows="5" 
-                    required="required" 
+                    class="form-control"
+                    rows="5"
+                    required="required"
                     placeholder="Comment something...">
-                        
+
                 </textarea>
             </div>
-            <button 
-                type="submit" 
+            <button
+                type="submit"
                 class="btn btn-primary"
                 @click="addReply">
                 Comment
@@ -28,6 +28,9 @@
 </template>
 
 <script>
+    import 'at.js';
+    import 'jquery.caret';
+
     export default {
         data() {
             return {
@@ -39,6 +42,20 @@
             signedIn() {
                 return window.App.signedIn;
             }
+        },
+
+        mounted() {
+            $('#body').atwho({
+                at: '@',
+                delay: 750,
+                callbacks: {
+                    remoteFilter: function (query, callback) {
+                        $.getJSON("/api/users", {name: query}, function (usernames) {
+                            callback(usernames);
+                        });
+                    }
+                }
+            });
         },
 
         methods: {
