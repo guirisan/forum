@@ -10,12 +10,12 @@ use Tests\TestCase;
 class ReplyTest extends TestCase
 {
     use DatabaseMigrations;
-   
+
     /** @test */
     public function it_has_an_owner()
     {
         $reply = create('App\Reply');
-        
+
         $this->assertInstanceOf('App\User', $reply->owner);
     }
 
@@ -25,7 +25,7 @@ class ReplyTest extends TestCase
         $reply = create('App\Reply');
 
         $this->assertTrue($reply->wasJustPublished());
-        
+
         $reply->created_at = Carbon::now()->subMonth();
 
         $this->assertFalse($reply->wasJustPublished());
@@ -34,7 +34,7 @@ class ReplyTest extends TestCase
     /** @test */
     public function it_can_detect_all_mentioned_users_in_the_body()
     {
-        $reply = create('App\Reply', [
+        $reply = new \App\Reply([
             'body' => '@jane wants to @john'
         ]);
 

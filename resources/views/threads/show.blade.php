@@ -23,7 +23,30 @@
                                 </form>
                             </span>
                             @endcan
-                            
+                            export default {
+    data() {
+        return {
+            items: []
+        };
+    },
+
+    methods: {
+        add(item){
+            this.items.push(item);
+
+            this.$emit('added');
+        },
+
+        remove(index){
+            this.items.splice(index, 1);
+
+            this.$emit('removed');
+
+            flash('Reply has been deleted');
+        }
+    }
+}
+
                         </div>
                     </div>
 
@@ -45,14 +68,14 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <p>
-                            Thread published {{ $thread->created_at->diffForHumans() }} by 
-                            <a href="#">{{ $thread->owner->name}}</a>, and has 
-                            <span v-text="repliesCount"></span> 
+                            Thread published {{ $thread->created_at->diffForHumans() }} by
+                            <a href="#">{{ $thread->owner->name}}</a>, and has
+                            <span v-text="repliesCount"></span>
                             {{ str_plural('comment', $thread->replies_count) }}
                         </p>
 
                         <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
-                         
+
 
                     </div>
                 </div>
