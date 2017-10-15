@@ -22,6 +22,8 @@ class UserAvatarController extends Controller
             'avatar_path' => request()->file('avatar')->store('avatars', 'public')
         ]);
 
+        // dd(auth()->user()->avatar_path);
+
         return back();
     }
 }

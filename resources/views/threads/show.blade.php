@@ -12,11 +12,20 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="level">
+
+                            <img
+                                src="/storage/{{ $thread->owner->avatar() }}"
+                                alt="{{ $thread->owner->name }}"
+                                width="25"
+                                height="25"
+                                class="mr-1">
+
                             <span class="flex">
                                 {{-- <a href="/profiles/{{ $thread->owner->name }}"> --}}
                                 <a href="{{ route('profile', $thread->owner) }}"> {{ $thread->owner->name}} </a>
                                 posted: <strong>{{ $thread->title }}</strong>
                             </span>
+
                             @can ('update', $thread)
                             <span>
                                 <form method="POST" action="{{ $thread->path() }}">
@@ -27,29 +36,6 @@
                                 </form>
                             </span>
                             @endcan
-                            export default {
-    data() {
-        return {
-            items: []
-        };
-    },
-
-    methods: {
-        add(item){
-            this.items.push(item);
-
-            this.$emit('added');
-        },
-
-        remove(index){
-            this.items.splice(index, 1);
-
-            this.$emit('removed');
-
-            flash('Reply has been deleted');
-        }
-    }
-}
 
                         </div>
                     </div>
