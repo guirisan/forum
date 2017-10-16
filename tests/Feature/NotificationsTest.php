@@ -11,7 +11,8 @@ use Tests\TestCase;
 class NotificationsTest extends TestCase
 {
     use DatabaseMigrations;
-    public function setUp()
+
+    protected function setUp()
     {
         parent::setUp();
 
@@ -27,7 +28,7 @@ class NotificationsTest extends TestCase
             'user_id' => auth()->id(),
             'body' => 'Some body'
         ]);
-        
+
         $this->assertCount(0, auth()->user()->fresh()->notifications);
 
         $thread->addReply([

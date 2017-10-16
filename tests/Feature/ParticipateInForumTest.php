@@ -43,7 +43,7 @@ class ParticipateInForumTest extends TestCase
         $thread = create('App\Thread');
 
         $reply = make('App\Reply', [ 'body' => null ]);
-        
+
         $this->post($thread->path() . '/replies', $reply->toArray())
             ->assertSessionHasErrors('body');
     }
@@ -85,7 +85,7 @@ class ParticipateInForumTest extends TestCase
         $reply = create('App\Reply', ['user_id' => auth()->id()]);
 
         $updatedBody = 'Updated body';
-        
+
         $this->patch("/replies/{$reply->id}", ['body' => $updatedBody]);
 
         $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedBody]);

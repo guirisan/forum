@@ -9,8 +9,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class FavoritesTest extends TestCase
 {
     use DatabaseMigrations;
-    
-    public function setUp()
+
+    protected function setUp()
     {
         parent::setUp();
     }
@@ -29,7 +29,7 @@ class FavoritesTest extends TestCase
         $this->signIn();
 
         $reply = create('App\Reply');
-        
+
         $this->post('/replies/' . $reply->id . '/favorites');
 
         $this->assertCount(1, $reply->favorites);
@@ -46,14 +46,14 @@ class FavoritesTest extends TestCase
         // /replies/id/favorite
         // /replies/id/favorites    <------------- SELECTED
         // /favorites <-- reply_id
-        
+
         /////////////////////////////////
         // THE SIMPLIEST POSSIBLE URI  //
         /////////////////////////////////
         $this->signIn();
 
         $reply = create('App\Reply');
-        
+
         $this->post('/replies/' . $reply->id . '/favorites');
 
         $this->assertCount(1, $reply->favorites);
@@ -71,7 +71,7 @@ class FavoritesTest extends TestCase
         } catch (\Exception $e) {
             $this->fail('Did not expect to insert the same record twice (user_id, favorited_id, favorited_type)');
         }
-        
+
 
         $this->assertCount(1, $reply->favorites);
     }

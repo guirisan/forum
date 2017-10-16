@@ -11,8 +11,7 @@ class AddAvatarTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /** @test */
-    public function only_members_can_add_avatars()
+    protected function only_members_can_add_avatars()
     {
         $this->withExceptionHandling();
 

@@ -3,9 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ReadThreadsTest extends TestCase
 {
@@ -13,7 +11,7 @@ class ReadThreadsTest extends TestCase
 
     protected $thread;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

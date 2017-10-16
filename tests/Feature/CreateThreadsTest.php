@@ -11,16 +11,14 @@ use Tests\TestCase;
 class CreateThreadsTest extends TestCase
 {
     use DatabaseMigrations;
-    
 
-    /** @test */
-    public function guests_can_not_create_new_threads()
+    protected function guests_can_not_create_new_threads()
     {
         $this->withExceptionHandling();
 
         $this->post('/threads')
             ->assertRedirect('/login');
-        
+
         $this->get('/threads/create')
             ->assertRedirect('/login');
     }
@@ -72,7 +70,7 @@ class CreateThreadsTest extends TestCase
         $this->withExceptionHandling();
 
         $thread = create('App\Thread');
-        
+
         $this->delete($thread->path())
             ->assertRedirect('/login');
 
@@ -96,7 +94,7 @@ class CreateThreadsTest extends TestCase
 
         $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
-        
+
         //lesson 28: when thread is deleted, activities associated must be removed too
         // $this->assertDatabaseMissing('activities', [
         //     'subject_id' => $thread->id,
@@ -115,7 +113,7 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function threads_can_only_be_deleted_if_user_has_right_permission()
     {
-        
+
     }
 
     public function publishThread($overrides = [])
