@@ -13,7 +13,7 @@ window.Vue.prototype.authorize = function(handler) {
     //////////////////////////
     // set admin privileges here//
     //////////////////////////
-    
+
     let user = window.App.user;
 
     return user ? handler(user) : false;
@@ -22,7 +22,7 @@ window.Vue.prototype.authorize = function(handler) {
 ////////////////////////
 // guirisan lesson 29 //
 ////////////////////////
-window.events = new Vue(); 
+window.events = new Vue();
 
 window.flash = function (message, level = 'success'){
     window.events.$emit('flash', {message, level});
@@ -43,6 +43,7 @@ window.flash = function (message, level = 'success'){
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
 Vue.component('user-notifications', require('./components/UserNotifications.vue'));
+Vue.component('avatar-form', require('./components/AvatarForm.vue'));
 // Vue.component('reply', require('./components/Reply.vue'));
 // Vue.component('favorite', require('./components/Favorite.vue'));
 

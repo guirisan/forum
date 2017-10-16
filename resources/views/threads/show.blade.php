@@ -14,7 +14,7 @@
                         <div class="level">
 
                             <img
-                                src="/storage/{{ $thread->owner->avatar() }}"
+                                src="{{ $thread->owner->avatar_path }}"
                                 alt="{{ $thread->owner->name }}"
                                 width="25"
                                 height="25"

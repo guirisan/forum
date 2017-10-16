@@ -4,23 +4,9 @@
         <div class="row">
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2">
                 <div class="page-header">
-                    <h1>
-                        <?php echo e($profileUser->name); ?>
 
-                        <small>since <?php echo e($profileUser->created_at->diffForHumans()); ?></small>
-                    </h1>
+                    <avatar-form :user="<?php echo e($profileUser); ?>"></avatar-form>
 
-                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('update', $profileUser)): ?>
-                        <form method="POST" action="<?php echo e(route('avatar', $profileUser)); ?>" enctype="multipart/form-data">
-                            <?php echo e(csrf_field()); ?>
-
-                            <input name="avatar" type="file" class="form-input">
-                            <button type="submit" class="btn btn-primary">Add avatar</button>
-                        </form>
-                    <?php endif; ?>
-
-
-                    <img src="/storage/<?php echo e($profileUser->avatar()); ?>" alt="" width="200" height="200">
                 </div>
 
                 <?php $__empty_1 = true; $__currentLoopData = $activities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $date => $activity): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>

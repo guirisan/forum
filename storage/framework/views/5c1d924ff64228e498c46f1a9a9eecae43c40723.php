@@ -12,7 +12,7 @@
                         <div class="level">
 
                             <img
-                                src="/storage/<?php echo e($thread->owner->avatar()); ?>"
+                                src="<?php echo e($thread->owner->avatar_path); ?>"
                                 alt="<?php echo e($thread->owner->name); ?>"
                                 width="25"
                                 height="25"
