@@ -104,9 +104,5 @@ class Thread extends Model
         return $filters->apply($query);
     }
 
-    public function visits()
-    {
-        return new Visits($this);
-    }
 
 }

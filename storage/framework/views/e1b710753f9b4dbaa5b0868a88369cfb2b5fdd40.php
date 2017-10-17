@@ -34,7 +34,7 @@
         </div>
 
         <div class="panel-footer">
-            <?php echo e($thread->visits()->count()); ?> visites
+            <?php echo e($thread->visits); ?> visites
         </div>
     </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
