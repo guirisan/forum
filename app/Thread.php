@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, RecordsVisits;
 
     protected $guarded = [];
 
@@ -26,7 +26,7 @@ class Thread extends Model
             $thread->replies->each->delete();
         });
     }
-    
+
     public function path()
     {
         return "/threads/{$this->channel->slug}/{$this->id}";
@@ -52,7 +52,7 @@ class Thread extends Model
     {
         //lesson 49
         // (new \App\Spam)->detect($reply->body);
-        
+
         $reply = $this->replies()->create($reply);
 
         event(new ThreadReceivedNewReply($reply));
@@ -61,12 +61,6 @@ class Thread extends Model
         // event(new ThreadHasNewReply($this, $reply));
 
         return $reply;
-    }
-
-
-    public function scopeFilter($query, $filters)
-    {
-        return $filters->apply($query);
     }
 
     public function subscribe($userId = null)
@@ -89,13 +83,6 @@ class Thread extends Model
         return $this->hasMany(ThreadSubscription::class);
     }
 
-    public function getIsSubscribedToAttribute()
-    {
-        return $this->subscriptions()
-            ->where('user_id', auth()->id())
-            ->exists();
-    }
-
     public function hasUpdatesFor($user = null)
     {
         $user = $user ?: auth()->user();
@@ -103,5 +90,17 @@ class Thread extends Model
         $key = $user->visitedThreadCacheKey($this);
 
         return $this->updated_at > cache($key);
+    }
+
+    public function getIsSubscribedToAttribute()
+    {
+        return $this->subscriptions()
+            ->where('user_id', auth()->id())
+            ->exists();
+    }
+
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
     }
 }

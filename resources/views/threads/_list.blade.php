@@ -26,13 +26,13 @@
             </a>
         </div>
         <div class="panel-body">
-                <article>
-                    <div class="body">
-                        {{ nl2br($thread->body) }}
-                    </div>
-                </article>
+                <div class="body"> {{ nl2br($thread->body) }} </div>
 
                 <hr>
+        </div>
+
+        <div class="panel-footer">
+            {{ $thread->visits() }} visites
         </div>
     </div>
 @empty

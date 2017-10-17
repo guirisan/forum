@@ -5,14 +5,15 @@ namespace Tests\Unit;
 use App\Notifications\ThreadWasUpdated;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
 {
     use DatabaseMigrations;
-    
+
     protected $thread;
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -34,13 +35,13 @@ class ThreadTest extends TestCase
         $this->assertInstanceOf('App\User', $this->thread->owner);
     }
 
-    
+
     /** @test */
     public function a_thread_has_replies()
     {
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->thread->replies);
     }
-    
+
     /** @test */
     public function a_thread_can_add_a_reply()
     {
@@ -144,5 +145,21 @@ class ThreadTest extends TestCase
 
             $this->assertFalse($thread->hasUpdatesFor($user));
         });
+    }
+
+    /** @test */
+    public function a_thread_records_each_visit()
+    {
+        $this->thread->resetVisits();
+
+        $this->assertSame(0, $this->thread->visits());
+
+        $this->thread->recordVisit();
+
+        $this->assertEquals(1, $this->thread->visits());
+
+        $this->thread->recordVisit();
+
+        $this->assertEquals(2, $this->thread->visits());
     }
 }

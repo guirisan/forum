@@ -28,14 +28,13 @@
             </a>
         </div>
         <div class="panel-body">
-                <article>
-                    <div class="body">
-                        <?php echo e(nl2br($thread->body)); ?>
-
-                    </div>
-                </article>
+                <div class="body"> <?php echo e(nl2br($thread->body)); ?> </div>
 
                 <hr>
+        </div>
+
+        <div class="panel-footer">
+            <?php echo e($thread->visits()); ?> visites
         </div>
     </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
