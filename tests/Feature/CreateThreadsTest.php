@@ -12,7 +12,8 @@ class CreateThreadsTest extends TestCase
 {
     use DatabaseMigrations;
 
-    protected function guests_can_not_create_new_threads()
+    /** @test */
+    public function guests_can_not_create_new_threads()
     {
         $this->withExceptionHandling();
 
@@ -21,6 +22,14 @@ class CreateThreadsTest extends TestCase
 
         $this->get('/threads/create')
             ->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function authenticated_users_must_firm_confirm_their_email_adress_before_creating_threads()
+    {
+        $this->publishThread()
+            ->assertRedirect('/threads')
+            ->assertSessionHas('flash', 'you must confirm email');
     }
 
      /** @test */
