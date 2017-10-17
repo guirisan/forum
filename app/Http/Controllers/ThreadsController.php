@@ -85,7 +85,7 @@ class ThreadsController extends Controller
 
         $trending->push($thread);
 
-        $thread->recordVisit();
+        $thread->visits()->record();
 
         // Redis::zincrby('trending_threads', 1, json_encode([
         //     'title' => $thread->title,
