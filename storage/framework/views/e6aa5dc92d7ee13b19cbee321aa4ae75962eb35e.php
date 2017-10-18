@@ -11,7 +11,7 @@
             </button>
 
             <!-- Branding Image -->
-            <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
+            <a class="navbar-brand" href="<?php echo e(url('')); ?>">
                 <?php echo e(config('app.name', 'Laravel')); ?>
 
             </a>
@@ -61,8 +61,8 @@
                 <li>
                     <a href="/threads/create">Create thread</a>
                 </li>
-                
-                
+
+
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -73,7 +73,7 @@
                     <li><a href="<?php echo e(route('register')); ?>">Register</a></li>
                 <?php else: ?>
                     <user-notifications></user-notifications>
-                    
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <?php echo e(Auth::user()->name); ?> <span class="caret"></span>
