@@ -7,11 +7,11 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PleaseConfirmYourEmail extends Mailable
+class PleaseConfirmYourEmail extends Mailable implements ShouldQueue
 {
-    public $user;
-
     use Queueable, SerializesModels;
+
+    public $user;
 
     /**
      * Create a new message instance.
