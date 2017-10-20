@@ -24,7 +24,7 @@ class CreateThreadsTable extends Migration
 
             $table->string('title');
             $table->text('body');
-            $table->string('slug')->unique();
+            $table->string('slug')->unique()->nullable();
         });
     }
 
