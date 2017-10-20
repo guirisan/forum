@@ -9,7 +9,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ProfilesTest extends TestCase
 {
-
     use DatabaseMigrations;
 
     /** @test */
@@ -18,7 +17,7 @@ class ProfilesTest extends TestCase
         $user = create('App\User');
 
         $this->get("/profiles/{$user->name}")
-            ->assertSee($user->name);        
+            ->assertSee($user->name);
     }
 
     /** @test */
@@ -31,6 +30,5 @@ class ProfilesTest extends TestCase
         $this->get("/profiles/" . auth()->user()->name)
             ->assertSee($thread->title)
             ->assertSee($thread->body);
-
     }
 }
