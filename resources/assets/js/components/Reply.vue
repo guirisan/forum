@@ -1,8 +1,8 @@
 <template>
-    <div :id="'reply-'+id" class="panel panel-default">
+    <div :id="'reply-'+id" class="panel" :class="isBest ? 'panel-success' : 'panel-default'">
         <div class="panel-heading">
             <div class="level">
-                
+
                 <h5 class="flex">
                     <a :href="'/profiles/'+data.owner.name"
                         v-text="data.owner.name">
@@ -16,13 +16,13 @@
                 </div>
 
             </div>
-            
+
         </div>
 
         <div class="panel-body">
             <div v-if="editing">
                 <form @submit="update">
-                    
+
                     <div class="form-group">
                         <textarea class="form-control" v-model="body" required></textarea>
                     </div>
@@ -35,9 +35,12 @@
             </div>
         </div>
 
-        <div class="panel-footer level" v-if="canUpdate">
-            <button class="btn btn-xs mr-1" @click="editing = true">Edit</button>
-            <button class="btn btn-danger btn-xs" @click="destroy">Delete</button>
+        <div class="panel-footer level">
+            <div v-if="canUpdate">
+                <button class="btn btn-xs mr-1" @click="editing = true">Edit</button>
+                <button class="btn btn-danger btn-xs" @click="destroy">Delete</button>
+            </div>
+            <button class="btn btn-default btn-xs ml-a" v-show="! isBest" @click="markBestReply">Best reply</button>
         </div>
     </div>
 </template>
@@ -48,12 +51,13 @@
 
     export default{
         props: ['data'],
-        
+
         data() {
             return {
                 editing: false,
                 id: this.data.id,
                 body: this.data.body,
+                isBest: false,
             };
         },
 
@@ -90,6 +94,10 @@
                 axios.delete('/replies/' + this.data.id);
 
                 this.$emit('deleted', this.data.id);
+            },
+
+            markBestReply() {
+                this.isBest = true;
             }
         }
     }

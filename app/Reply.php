@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
     use Favoritable, RecordsActivity;
-    
+
     protected $guarded = [];
 
     protected $with = ['owner', 'favorites'];
@@ -48,6 +48,11 @@ class Reply extends Model
         return $this->created_at->gt(Carbon::now()->subMinute());
     }
 
+    public function isBest()
+    {
+        return $this->id == $this->thread->best_reply_id;
+    }
+
     public function mentionedUsers()
     {
         preg_match_all('/@([\w\-]+)/', $this->body, $matches);
@@ -59,4 +64,5 @@ class Reply extends Model
     {
         $this->attributes['body'] = preg_replace('/@([\w\-]+)/', '<a href="/profiles/$1">$0</a>', $body);
     }
+
 }

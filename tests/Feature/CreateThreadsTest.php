@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Activity;
 use App\Thread;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 

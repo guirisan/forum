@@ -48,6 +48,9 @@ class ThreadPolicy
      */
     public function update(User $user, Thread $thread)
     {
+        // var_dump($user->id);
+        // var_dump($thread->user_id);
+        // dd($thread->user_id == $user->id);
         return $thread->user_id == $user->id;
     }
 

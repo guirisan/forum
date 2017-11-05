@@ -32,6 +32,18 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
+    public function it_knows_if_it_is_the_best_reply()
+    {
+        $reply = create('App\Reply');
+
+        $this->assertFalse($reply->isBest());
+
+        $reply->thread->update(['best_reply_id' => $reply->id]);
+
+        $this->assertTrue($reply->fresh()->isBest());
+    }
+
+    /** @test */
     public function it_can_detect_all_mentioned_users_in_the_body()
     {
         $reply = new \App\Reply([

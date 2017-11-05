@@ -34,7 +34,6 @@ class Thread extends Model
     public function path()
     {
         return "/threads/{$this->channel->slug}/{$this->slug}";
-        //return '/threads/' . $this->channel->slug . '/'. $this->id;
     }
 
     public function replies()
@@ -122,5 +121,10 @@ class Thread extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function markBestReply(Reply $reply)
+    {
+        $this->update(['best_reply_id' => $reply->id]);
     }
 }
