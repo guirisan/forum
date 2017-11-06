@@ -20,13 +20,17 @@ class RepliesController extends Controller
     {
         return $thread->replies()->paginate(20);
     }
-    
+
     public function store($channelId, Thread $thread, CreatePostRequest $form)
-    {   
+    {
+        if ($thread->locked){
+            return response('Thread is locked', 422);
+        }
+
         return $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()
-        ])->load('owner'); 
+        ])->load('owner');
     }
 
     public function update(Reply $reply)
@@ -34,7 +38,7 @@ class RepliesController extends Controller
         $this->authorize('update', $reply);
 
         $this->validate(request(), ['body' => 'required|spamfree']);
-        
+
         // $reply->update(['body' => request('body')]);
         $reply->update(request(['body']));
     }

@@ -26,6 +26,7 @@ class CreateThreadsTable extends Migration
             $table->string('title');
             $table->text('body');
             $table->string('slug')->unique()->nullable();
+            $table->boolean('locked')->default(false);
 
             $table->foreign('best_reply_id')
                 ->references('id')
