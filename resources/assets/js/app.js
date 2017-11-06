@@ -21,10 +21,6 @@ window.Vue.prototype.authorize = function (...params) {
     if (typeof(params[0]) === 'string'){
         return authorizations[params[0]](params[1]);
     }
-    // console.log('-----------------');
-    // console.log(params[0]);
-    // console.log(typeof params[0] === 'string');
-    // console.log('-----------------');
 
     return params[0](window.App.user);
 }

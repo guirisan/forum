@@ -26735,10 +26735,6 @@ window.Vue.prototype.authorize = function () {
     if (typeof params[0] === 'string') {
         return authorizations[params[0]](params[1]);
     }
-    // console.log('-----------------');
-    // console.log(params[0]);
-    // console.log(typeof params[0] === 'string');
-    // console.log('-----------------');
 
     return params[0](window.App.user);
 };
@@ -58762,12 +58758,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['data'],
 
+    components: { Favorite: __WEBPACK_IMPORTED_MODULE_0__Favorite_vue___default.a },
+
     data: function data() {
         return {
             editing: false,
             id: this.data.id,
             body: this.data.body,
-            isBest: false,
+            isBest: this.data.isBest,
             reply: this.data
         };
     },
@@ -58779,7 +58777,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
 
-    components: { Favorite: __WEBPACK_IMPORTED_MODULE_0__Favorite_vue___default.a },
+    created: function created() {
+        var _this = this;
+
+        window.events.$on('best-reply-selected', function (id) {
+            _this.isBest = id === _this.id;
+        });
+    },
+
 
     methods: {
         update: function update() {
@@ -58800,6 +58805,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         markBestReply: function markBestReply() {
             this.isBest = true;
+
+            axios.post('/replies/' + this.data.id + '/best');
+
+            window.events.$emit('best-reply-selected', this.data.id);
         }
     }
 });
