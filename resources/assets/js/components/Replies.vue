@@ -13,8 +13,8 @@
 
 
 <script>
-    
-    import Reply from './Reply.vue'; 
+
+    import Reply from './Reply.vue';
     import NewReply from './NewReply.vue';
     import collection from '../mixins/Collection';
 
@@ -52,7 +52,6 @@
 
                     page = query ? query[1] : 1;
                 }
-                console.log('page: ' + page);
                 return location.pathname + '/replies?page=' + page;
             },
 

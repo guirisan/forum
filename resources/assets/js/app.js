@@ -9,15 +9,27 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-window.Vue.prototype.authorize = function(handler) {
+let authorizations = require('./authorizations');
+
+window.Vue.prototype.authorize = function (...params) {
     //////////////////////////
     // set admin privileges here//
     //////////////////////////
 
-    let user = window.App.user;
+    if (! window.App.signedIn) return false;
 
-    return user ? handler(user) : false;
+    if (typeof(params[0]) === 'string'){
+        return authorizations[params[0]](params[1]);
+    }
+    // console.log('-----------------');
+    // console.log(params[0]);
+    // console.log(typeof params[0] === 'string');
+    // console.log('-----------------');
+
+    return params[0](window.App.user);
 }
+
+Vue.prototype.signedIn = window.App.signedIn;
 
 ////////////////////////
 // guirisan lesson 29 //
