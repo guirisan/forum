@@ -59,6 +59,12 @@ class User extends Authenticatable
         $this->save();
     }
 
+    public function isAdmin()
+    {
+        return in_array($this->name, ['john', 'jane']);
+    }
+
+
     public function visitedThreadCacheKey($thread)
     {
         return sprintf('users.%s.visits.%s', $this->id, $thread->id);
@@ -79,4 +85,5 @@ class User extends Authenticatable
         return ($avatar ? '/storage/'.$avatar : '/storage/avatars/default.jpg');
         //to-do asset working! symlinks?
     }
+
 }
