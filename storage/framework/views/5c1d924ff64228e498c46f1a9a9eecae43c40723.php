@@ -3,7 +3,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-<thread-view :initial-replies-count=<?php echo e($thread->replies_count); ?> inline-template>
+<thread-view :data-replies-count="<?php echo e($thread->replies_count); ?>" :data-locked="<?php echo e($thread->locked); ?>" inline-template>
     <div class="container">
         <div class="row">
             <div class="col-md-8 ">
@@ -66,7 +66,9 @@
 
                         </p>
 
-                        <subscribe-button :active="<?php echo e(json_encode($thread->isSubscribedTo)); ?>"></subscribe-button>
+                        <subscribe-button v-if="signedIn" :active="<?php echo e(json_encode($thread->isSubscribedTo)); ?>"></subscribe-button>
+
+                        <button v-if="authorize('isAdmin') && !locked" @click="locked = true" class="btn btn-default">Lock</button>
 
 
                     </div>
