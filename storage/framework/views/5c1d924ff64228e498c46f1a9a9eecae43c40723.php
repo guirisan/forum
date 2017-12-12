@@ -3,7 +3,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-<thread-view :data-replies-count="<?php echo e($thread->replies_count); ?>" :data-locked="<?php echo e($thread->locked); ?>" inline-template>
+<thread-view :thread="<?php echo e($thread); ?>" inline-template v-cloak>
     <div class="container">
         <div class="row">
             <div class="col-md-8 ">
@@ -19,7 +19,6 @@
                                 class="mr-1">
 
                             <span class="flex">
-                                
                                 <a href="<?php echo e(route('profile', $thread->owner)); ?>"> <?php echo e($thread->owner->name); ?> </a>
                                 posted: <strong><?php echo e($thread->title); ?></strong>
                             </span>
@@ -68,7 +67,11 @@
 
                         <subscribe-button v-if="signedIn" :active="<?php echo e(json_encode($thread->isSubscribedTo)); ?>"></subscribe-button>
 
-                        <button v-if="authorize('isAdmin') && !locked" @click="locked = true" class="btn btn-default">Lock</button>
+                        <button v-if="authorize('isAdmin')"
+                            @click="toggleLock"
+                            v-text="locked ? 'Unlock' : 'Lock'"
+                            class="btn btn-default">Lock
+                        </button>
 
 
                     </div>

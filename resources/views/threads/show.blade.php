@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<thread-view :data-replies-count="{{ $thread->replies_count }}" :data-locked="{{ $thread->locked }}" inline-template>
+<thread-view :thread="{{ $thread }}" inline-template v-cloak>
     <div class="container">
         <div class="row">
             <div class="col-md-8 ">
@@ -21,7 +21,6 @@
                                 class="mr-1">
 
                             <span class="flex">
-                                {{-- <a href="/profiles/{{ $thread->owner->name }}"> --}}
                                 <a href="{{ route('profile', $thread->owner) }}"> {{ $thread->owner->name}} </a>
                                 posted: <strong>{{ $thread->title }}</strong>
                             </span>
@@ -66,7 +65,11 @@
 
                         <subscribe-button v-if="signedIn" :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
 
-                        <button v-if="authorize('isAdmin') && !locked" @click="locked = true" class="btn btn-default">Lock</button>
+                        <button v-if="authorize('isAdmin')"
+                            @click="toggleLock"
+                            v-text="locked ? 'Unlock' : 'Lock'"
+                            class="btn btn-default">Lock
+                        </button>
 
 
                     </div>
