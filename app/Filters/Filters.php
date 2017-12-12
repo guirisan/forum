@@ -61,6 +61,7 @@ abstract class Filters
      */
     public function getFilters()
     {
-        return $this->request->intersect($this->filters);
+        // return $this->request->intersect($this->filters); // from 5.4
+        return array_filter($this->request->only($this->filters));
     }
 }

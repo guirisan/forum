@@ -146,22 +146,16 @@ class CreateThreadsTest extends TestCase
         //     'subject_type' => get_class($reply)
         // ]);
 
-        // En compte de comprovar que no existixen eixos registre a la BD
+        // En compte de comprovar que no existixen eixos registres a la BD
         // comprovem que la taula d'activitats està buida, que en este cas és equivalent
         $this->assertEquals(0,Activity::count());
-    }
-
-    /** @test */
-    public function threads_can_only_be_deleted_if_user_has_right_permission()
-    {
-
     }
 
     public function publishThread($overrides = [])
     {
         $this->withExceptionHandling()->signIn();
 
-        $thread  = make('App\Thread', $overrides);
+        $thread = make('App\Thread', $overrides);
 
         return $this->post(route('threads'), $thread->toArray());
     }
