@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
 <head>
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,9 +30,8 @@
 
     @yield('header')
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
 </head>
+
 <body style="padding-bottom: 200px">
     <div id="app">
         @include('layouts.nav')

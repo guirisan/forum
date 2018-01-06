@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('header')
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -13,7 +17,7 @@
                 <form action="/threads" method="POST" role="form">
 
                     {{ csrf_field() }}
-                                    
+
                     <div class="form-group">
                         <label for="channel_id">Channel:</label>
                         <select name="channel_id" id="inputChannel_id" class="form-control" required>
@@ -23,20 +27,24 @@
                                     {{ $channel->slug  }}
                                 </option>
                             @endforeach
-                        </select>                    
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label for="title">Title:</label>
                         <input type="text" name="title" id="inputTitle" class="form-control" value="{{ old('title') }}" required>
                     </div>
-                
+
                     <div class="form-group">
                         <label for="body">Body:</label>
                         <textarea name="body" id="inputBody" class="form-control" rows="10" required>{{ old('body') }}</textarea>
-                    </div>                 
+                    </div>
 
-                    <div class="form-gro">
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="6LcXtTwUAAAAAIqTxEO4DqEp2KhoeepRngsw7r7d"></div>
+                    </div>
+
+                    <div class="form-group">
                         @if (count($errors))
                             <ul class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
@@ -45,7 +53,7 @@
                                 </li>
                                 @endforeach
                             </ul>
-                        @endif   
+                        @endif
                     </div>
 
                     <div class="form-group">

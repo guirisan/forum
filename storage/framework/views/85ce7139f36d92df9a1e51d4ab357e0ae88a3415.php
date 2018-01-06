@@ -1,3 +1,7 @@
+<?php $__env->startSection('header'); ?>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
 <div class="container">
     <div class="row">
@@ -12,7 +16,7 @@
 
                     <?php echo e(csrf_field()); ?>
 
-                                    
+
                     <div class="form-group">
                         <label for="channel_id">Channel:</label>
                         <select name="channel_id" id="inputChannel_id" class="form-control" required>
@@ -23,20 +27,24 @@
 
                                 </option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>                    
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label for="title">Title:</label>
                         <input type="text" name="title" id="inputTitle" class="form-control" value="<?php echo e(old('title')); ?>" required>
                     </div>
-                
+
                     <div class="form-group">
                         <label for="body">Body:</label>
                         <textarea name="body" id="inputBody" class="form-control" rows="10" required><?php echo e(old('body')); ?></textarea>
-                    </div>                 
+                    </div>
 
-                    <div class="form-gro">
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="6LcXtTwUAAAAAIqTxEO4DqEp2KhoeepRngsw7r7d"></div>
+                    </div>
+
+                    <div class="form-group">
                         <?php if(count($errors)): ?>
                             <ul class="alert alert-danger">
                                 <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -46,7 +54,7 @@
                                 </li>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
-                        <?php endif; ?>   
+                        <?php endif; ?>
                     </div>
 
                     <div class="form-group">
