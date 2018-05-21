@@ -5,12 +5,12 @@ namespace Tests\Feature;
 use App\Activity;
 use App\Rules\Recaptcha;
 use App\Thread;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CreateThreadsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setUp()
     {
@@ -50,7 +50,7 @@ class CreateThreadsTest extends TestCase
     }
 
      /** @test */
-    public function a_user_can_create_new_threads()
+    public function a_user_can_create_new_forum_threads()
     {
         $response = $this->publishThread(['title' => 'Some title', 'body' => 'Some body']);
 
@@ -167,6 +167,8 @@ class CreateThreadsTest extends TestCase
         // comprovem que la taula d'activitats està buida, que en este cas és equivalent
         $this->assertEquals(0,Activity::count());
     }
+
+
 
     public function publishThread($overrides = [])
     {
