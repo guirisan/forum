@@ -58556,7 +58556,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             repliesCount: this.thread.repliesCount,
-            locked: this.thread.locked
+            locked: this.thread.locked,
+            editing: false
         };
     },
 

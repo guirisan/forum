@@ -7,44 +7,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 ">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="level">
 
-                            <img
-                                src="<?php echo e($thread->owner->avatar_path); ?>"
-                                alt="<?php echo e($thread->owner->name); ?>"
-                                width="25"
-                                height="25"
-                                class="mr-1">
-
-                            <span class="flex">
-                                <a href="<?php echo e(route('profile', $thread->owner)); ?>"> <?php echo e($thread->owner->name); ?> </a>
-                                posted: <strong><?php echo e($thread->title); ?></strong>
-                            </span>
-
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('update', $thread)): ?>
-                            <span>
-                                <form method="POST" action="<?php echo e($thread->path()); ?>">
-                                    <?php echo e(csrf_field()); ?>
-
-                                    <?php echo e(method_field('DELETE')); ?>
-
-
-                                    <button type="submit" class="btn btn-link">Delete</button>
-                                </form>
-                            </span>
-                            <?php endif; ?>
-
-                        </div>
-                    </div>
-
-                    <div class="panel-body">
-                        <?php echo e($thread->body); ?>
-
-                    </div>
-                </div>
-
+                <?php echo $__env->make('threads._question', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
                 <replies
                     @added="repliesCount++"

@@ -11,6 +11,7 @@
             return {
                 repliesCount: this.thread.repliesCount,
                 locked: this.thread.locked,
+                editing: false
             };
 
         },
